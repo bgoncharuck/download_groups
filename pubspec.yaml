@@ -1,0 +1,26 @@
+name: download_groups
+description: "A battle-tested Dart/Flutter library for downloading and managing groups of assets from remote servers with multi-domain support, progress tracking, and comprehensive error handling. Has only two deps - dio and path_provider."
+version: 1.0.0
+homepage: https://github.com/bgoncharuck/download_groups
+repository: https://github.com/bgoncharuck/download_groups
+issue_tracker: https://github.com/bgoncharuck/download_groups/issues
+documentation: https://github.com/bgoncharuck/download_groups/blob/main/README.md
+
+topics:
+  - download
+  - assets
+  - caching
+  - network
+  - flutter
+
+environment:
+  sdk: ^3.7.2
+  flutter: ">=3.0.0"
+
+dependencies:
+  path_provider: ^2.1.5
+  dio: ^5.9.0
+
+dev_dependencies:
+  flutter_lints: ^6.0.0
+  very_good_analysis: ^10.0.0
