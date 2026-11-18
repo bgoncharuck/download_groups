@@ -144,6 +144,60 @@ try {
 }
 ```
 
+### Using the Flutter Helper (optional)
+
+If you're building a Flutter app, you can use the optional `DownloadGroupsFlutter` helper, which exposes download progress as `ValueNotifier`s so your UI can bind to them directly.
+
+Import it:
+
+```dart
+import 'package:download_groups/flutter.dart';
+```
+
+Create the helper:
+
+```dart
+final helper = DownloadGroupsFlutter(
+  DioDownloadGroupsHandler(
+    logger: AssetDownloaderLogger(debugPrint),
+  ),
+);
+```
+
+Check whether assets are already downloaded, and download them if needed:
+
+```dart
+final ready = await helper.checkIfAssetsAreDownloaded(
+  groups: downloadGroups.values,
+  appDomains: appDomains,
+);
+if (!ready) {
+  await helper.executeDownload(
+    groups: downloadGroups.values,
+    appDomains: appDomains,
+  );
+}
+```
+
+Bind the progress notifiers to your UI:
+
+```dart
+// '3/10'
+helper.downloadProgressText;
+
+// 30 (0–100)
+helper.downloadProgressPercentage;
+
+// Result of the last download operation
+helper.downloadResult;
+```
+
+Call `helper.dispose()` when you no longer need the helper (e.g. in a controller's `dispose`) to avoid memory leaks.
+
+The helper is optional and Flutter-only. Pure Dart consumers should continue to import
+`package:download_groups/download_groups.dart` and use `DownloadGroupsHandler` directly,
+without any Flutter dependency.
+
 ### 5. Use Downloaded Assets in Your UI
 
 ```dart
@@ -305,6 +359,7 @@ final logger = AssetDownloaderLogger((message) {});
 - **[DefaultAssetGroup]** - Basic implementation of AssetGroup
 - **[AssetDownloaderLogger]** - Flexible logging adapter
 - **[DownloadGroupsResult]** - Result type for download operations
+- **[DownloadGroupsFlutter]** - Optional Flutter-only helper with `ValueNotifier`-based progress tracking
 
 ### Error Types
 
